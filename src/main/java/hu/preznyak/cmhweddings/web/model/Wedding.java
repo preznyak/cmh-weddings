@@ -1,9 +1,6 @@
 package hu.preznyak.cmhweddings.web.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +11,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
+@EqualsAndHashCode
 @Document(collection = "wedding")
 public class Wedding {
     @Id
@@ -21,5 +20,7 @@ public class Wedding {
     private String brideName;
     private String groomName;
     private String location;
+    private String contactInfo;
     private LocalDate date;
+    private Double price;
 }
