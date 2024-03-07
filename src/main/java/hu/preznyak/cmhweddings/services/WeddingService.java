@@ -12,7 +12,7 @@ public interface WeddingService {
 
     Wedding save(Wedding newWedding);
 
-    Wedding update(Wedding updatedWedding);
+    Wedding update(UUID weddingId, Wedding updatedWedding);
 
     void delete(UUID weddingId);
 }

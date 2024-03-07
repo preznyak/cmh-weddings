@@ -2,7 +2,6 @@ package hu.preznyak.cmhweddings.web.controller;
 
 import hu.preznyak.cmhweddings.services.WeddingService;
 import hu.preznyak.cmhweddings.web.model.Wedding;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +21,26 @@ public class WeddingController {
 
     @GetMapping("/findAll")
     public ResponseEntity<List<Wedding>> findAll(){
-        return new ResponseEntity<>(weddingService.findAll(), HttpStatus.OK);
+        List<Wedding> resultList = weddingService.findAll();
+        return new ResponseEntity<>(resultList, HttpStatus.OK);
     }
 
     @GetMapping("/{weddingId}")
     public ResponseEntity<Wedding> findById(@PathVariable("weddingId") UUID weddingId) {
-        return new ResponseEntity<>(weddingService.findById(weddingId), HttpStatus.OK);
+        Wedding result = weddingService.findById(weddingId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Wedding> saveWedding(@RequestBody Wedding newWedding) {
-        return new ResponseEntity(weddingService.save(newWedding), HttpStatus.CREATED);
+        Wedding saved = weddingService.save(newWedding);
+        return new ResponseEntity(saved, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<Wedding> updateWedding(@RequestBody Wedding updatedWedding) {
-        return new ResponseEntity<>(weddingService.update(updatedWedding), HttpStatus.OK);
+    @PutMapping("/{weddingId}")
+    public ResponseEntity<Wedding> updateWedding(@PathVariable("weddingId") UUID weddingId,
+                                                 @RequestBody Wedding updatedWedding) {
+        return new ResponseEntity<>(weddingService.update(weddingId, updatedWedding), HttpStatus.OK);
     }
 
     @DeleteMapping("/{weddingId}")
