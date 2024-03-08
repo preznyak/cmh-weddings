@@ -39,7 +39,7 @@ public class WeddingServiceImpl implements WeddingService{
             saved.setDate(updatedWedding.getDate());
             saved.setLocation(updatedWedding.getLocation());
             saved.setPrice(updatedWedding.getPrice());
-            saved.setContactInfo(updatedWedding.getContactInfo());
+            saved.setCurrency(updatedWedding.getCurrency());
         }
 
         return weddingRepository.save(saved);
