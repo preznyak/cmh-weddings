@@ -1,6 +1,6 @@
 package hu.preznyak.cmhweddings.services;
 
-import hu.preznyak.cmhweddings.web.model.Wedding;
+import hu.preznyak.cmhweddings.domain.Wedding;
 
 import java.util.List;
 import java.util.UUID;

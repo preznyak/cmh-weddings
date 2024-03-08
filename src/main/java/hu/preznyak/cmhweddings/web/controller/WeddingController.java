@@ -1,7 +1,7 @@
 package hu.preznyak.cmhweddings.web.controller;
 
 import hu.preznyak.cmhweddings.services.WeddingService;
-import hu.preznyak.cmhweddings.web.model.Wedding;
+import hu.preznyak.cmhweddings.domain.Wedding;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

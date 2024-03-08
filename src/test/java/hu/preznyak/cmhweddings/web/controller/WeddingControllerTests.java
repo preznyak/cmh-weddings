@@ -2,7 +2,7 @@ package hu.preznyak.cmhweddings.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.preznyak.cmhweddings.services.WeddingService;
-import hu.preznyak.cmhweddings.web.model.Wedding;
+import hu.preznyak.cmhweddings.domain.Wedding;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

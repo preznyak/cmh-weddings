@@ -1,7 +1,7 @@
 package hu.preznyak.cmhweddings.services;
 
 import hu.preznyak.cmhweddings.repositories.WeddingRepository;
-import hu.preznyak.cmhweddings.web.model.Wedding;
+import hu.preznyak.cmhweddings.domain.Wedding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
