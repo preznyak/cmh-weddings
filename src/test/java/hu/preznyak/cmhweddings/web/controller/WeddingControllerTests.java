@@ -2,7 +2,8 @@ package hu.preznyak.cmhweddings.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.preznyak.cmhweddings.services.WeddingService;
-import hu.preznyak.cmhweddings.domain.Wedding;
+import hu.preznyak.cmhweddings.web.model.WeddingDto;
+import hu.preznyak.cmhweddings.web.model.enums.Currency;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,7 +39,7 @@ public class WeddingControllerTests {
     void givenValidWeddingId_whenFindById_then200IsReceived() throws Exception {
 
         //Given
-        Wedding expectedWedding = Wedding.builder()
+        WeddingDto expectedWedding = WeddingDto.builder()
                 .id(VALID_UUID)
                 .build();
         when(weddingService.findById(VALID_UUID)).thenReturn(expectedWedding);
@@ -58,15 +59,14 @@ public class WeddingControllerTests {
     void givenValidRequestBody_whenCreateNewWedding_then201IsReceived() throws Exception {
 
         //Given
-        Wedding toSave = getWedding(VALID_UUID);
+        WeddingDto toSave = getValidWeddingDto();
         when(weddingService.save(toSave)).thenReturn(toSave);
 
         //Then
         mockMvc.perform(post(API_V1_WEDDING)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(toSave)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(VALID_UUID.toString()));
+                .andExpect(status().isCreated());
 
     }
 
@@ -86,17 +86,12 @@ public class WeddingControllerTests {
     void givenValidRequestBodyAndWeddingId_whenUpdate_then200IsReceived() throws Exception {
 
         //given
-        Wedding expectedResponse = getWedding(VALID_UUID);
-        expectedResponse.setLocation("Another location");
+        WeddingDto validWeddingDto = getValidWeddingDto();
+        validWeddingDto.setLocation("Another location");
 
-        Wedding updateRequestBody = Wedding.builder()
-                .id(VALID_UUID)
-                .location("Another location")
-                .build();
+        String updateRequestBodyJson = objectMapper.writeValueAsString(validWeddingDto);
 
-        String updateRequestBodyJson = objectMapper.writeValueAsString(updateRequestBody);
-
-        when(weddingService.update(VALID_UUID, updateRequestBody)).thenReturn(expectedResponse);
+        when(weddingService.update(VALID_UUID, validWeddingDto)).thenReturn(validWeddingDto);
 
         //then
         mockMvc.perform(put(API_V1_WEDDING + "/" + VALID_UUID)
@@ -106,14 +101,14 @@ public class WeddingControllerTests {
 
     }
 
-    private Wedding getWedding(UUID id) {
-        return Wedding.builder()
-                .id(id)
+    private WeddingDto getValidWeddingDto() {
+        return WeddingDto.builder()
                 .brideName("Test Bride")
                 .groomName("Test Groom")
                 .location("Testedelphia")
                 .date(LocalDate.now())
                 .price(new BigDecimal(250.0))
+                .currency(Currency.EUR)
                 .build();
     }
 

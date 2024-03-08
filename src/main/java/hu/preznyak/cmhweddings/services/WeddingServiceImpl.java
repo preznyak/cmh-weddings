@@ -1,48 +1,55 @@
 package hu.preznyak.cmhweddings.services;
 
-import hu.preznyak.cmhweddings.repositories.WeddingRepository;
 import hu.preznyak.cmhweddings.domain.Wedding;
-import org.springframework.beans.factory.annotation.Autowired;
+import hu.preznyak.cmhweddings.repositories.WeddingRepository;
+import hu.preznyak.cmhweddings.web.mappers.WeddingMapper;
+import hu.preznyak.cmhweddings.web.model.WeddingDto;
+import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
+@RequiredArgsConstructor
 @Service
-public class WeddingServiceImpl implements WeddingService{
+public class WeddingServiceImpl implements WeddingService {
 
-    @Autowired
-    private WeddingRepository weddingRepository;
+    private final WeddingRepository weddingRepository;
+    private final WeddingMapper weddingMapper;
 
     @Override
-    public List<Wedding> findAll() {
-        return weddingRepository.findAll();
+    public List<WeddingDto> findAll() {
+        val weddingList = weddingRepository.findAll();
+        List<WeddingDto> weddingDtoList = new ArrayList<>(weddingList.size());
+        weddingList.forEach(wedding -> weddingDtoList.add(weddingMapper.weddingToWeddingDto(wedding)));
+        return weddingDtoList;
     }
 
     @Override
-    public Wedding findById(UUID weddingId) {
-        return weddingRepository.findById(weddingId).orElse(null); // todo
+    public WeddingDto findById(UUID weddingId) {
+        Optional<Wedding> wedding = weddingRepository.findById(weddingId);
+        return wedding.map(weddingMapper::weddingToWeddingDto).orElse(null); // todo - fix the orElse part
     }
 
     @Override
-    public Wedding save(Wedding newWedding) {
-        return weddingRepository.save(newWedding);
+    public WeddingDto save(WeddingDto newWeddingDto) {
+        Wedding toSave = weddingMapper.weddingDtoToWedding(newWeddingDto);
+        return weddingMapper.weddingToWeddingDto(weddingRepository.save(toSave));
     }
 
     @Override
-    public Wedding update(UUID weddingId, Wedding updatedWedding) {
+    public WeddingDto update(UUID weddingId, WeddingDto updatedWeddingDto) {
         Wedding saved = weddingRepository.findById(weddingId).orElse(null); // todo
         if (Objects.isNull(saved)) {
-
+            return null; // todo
         } else {
-            saved.setDate(updatedWedding.getDate());
-            saved.setLocation(updatedWedding.getLocation());
-            saved.setPrice(updatedWedding.getPrice());
-            saved.setCurrency(updatedWedding.getCurrency());
+            saved.setDate(updatedWeddingDto.getDate());
+            saved.setLocation(updatedWeddingDto.getLocation());
+            saved.setPrice(updatedWeddingDto.getPrice());
+            saved.setCurrency(updatedWeddingDto.getCurrency().name());
         }
 
-        return weddingRepository.save(saved);
+        return weddingMapper.weddingToWeddingDto(weddingRepository.save(saved));
     }
 
     @Override

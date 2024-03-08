@@ -1,18 +1,18 @@
 package hu.preznyak.cmhweddings.services;
 
-import hu.preznyak.cmhweddings.domain.Wedding;
+import hu.preznyak.cmhweddings.web.model.WeddingDto;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface WeddingService {
-    List<Wedding> findAll();
+    List<WeddingDto> findAll();
 
-    Wedding findById(UUID weddingId);
+    WeddingDto findById(UUID weddingId);
 
-    Wedding save(Wedding newWedding);
+    WeddingDto save(WeddingDto newWeddingDto);
 
-    Wedding update(UUID weddingId, Wedding updatedWedding);
+    WeddingDto update(UUID weddingId, WeddingDto updatedWeddingDto);
 
     void delete(UUID weddingId);
 }
