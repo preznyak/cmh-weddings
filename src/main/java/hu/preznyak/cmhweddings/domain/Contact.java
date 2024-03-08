@@ -1,8 +1,6 @@
 package hu.preznyak.cmhweddings.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,4 +28,8 @@ public class Contact {
 
     @Column(length = 20)
     private String phoneNumber;
+
+    @OneToOne
+    @JoinColumn(name = "wedding_id", referencedColumnName = "id", nullable = false)
+    private Wedding wedding;
 }
