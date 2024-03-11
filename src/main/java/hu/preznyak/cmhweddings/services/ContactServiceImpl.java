@@ -1,36 +1,58 @@
 package hu.preznyak.cmhweddings.services;
 
+import hu.preznyak.cmhweddings.domain.Contact;
+import hu.preznyak.cmhweddings.repositories.ContactRepository;
+import hu.preznyak.cmhweddings.web.mappers.ContactMapper;
 import hu.preznyak.cmhweddings.web.model.ContactDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
+@RequiredArgsConstructor
 @Service
 public class ContactServiceImpl implements ContactService {
 
+    private final ContactRepository contactRepository;
+    private final ContactMapper contactMapper;
+
     @Override
     public List<ContactDto> findAll() {
-        return null;
+        List<Contact> contactList = contactRepository.findAll();
+        List<ContactDto> contactDtoList = new ArrayList<>(contactList.size());
+
+        contactList.forEach(contact -> contactDtoList.add(contactMapper.contactToContactDto(contact)));
+
+        return contactDtoList;
     }
 
     @Override
     public ContactDto findById(UUID contactId) {
-        return null;
+        Optional<Contact> contact = contactRepository.findById(contactId);
+        return contact.map(contactMapper::contactToContactDto).orElse(null); // todo fix
     }
 
     @Override
     public ContactDto save(ContactDto newContactDto) {
-        return null;
+        Contact saved = contactRepository.save(contactMapper.contactDtoToContact(newContactDto));
+        return contactMapper.contactToContactDto(saved);
     }
 
     @Override
     public ContactDto update(UUID contactId, ContactDto updatedContactDto) {
-        return null;
+        Contact toUpdate = contactRepository.findById(contactId).orElse(null);
+        if (Objects.isNull(toUpdate)) {
+            //todo
+        } else {
+            toUpdate.setName(updatedContactDto.getName());
+            toUpdate.setEmailAddress(updatedContactDto.getEmailAddress());
+            toUpdate.setPhoneNumber(updatedContactDto.getPhoneNumber());
+        }
+        return contactMapper.contactToContactDto(contactRepository.save(toUpdate));
     }
 
     @Override
     public void delete(UUID contactId) {
-
+        contactRepository.deleteById(contactId);
     }
 }
