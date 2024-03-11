@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ContactController {
 
     @Autowired
-    private ContactService contactService;
+    ContactService contactService;
 
     @GetMapping("/{contactId}")
     public ResponseEntity<ContactDto> findById(@PathVariable("contactId") UUID contactId) {
@@ -40,5 +40,12 @@ public class ContactController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteContact(@PathVariable("contactId") UUID contactId) {
         contactService.delete(contactId);
+    }
+
+    @GetMapping("/byWeddingId/{weddingId}")
+    public ResponseEntity<ContactDto> findByWeddingId(@PathVariable("weddingId") UUID weddingId) {
+        ContactDto contactDto = contactService.findByWeddingId(weddingId);
+        return new ResponseEntity<>(contactDto, HttpStatus.OK);
+
     }
 }

@@ -55,4 +55,15 @@ public class ContactServiceImpl implements ContactService {
     public void delete(UUID contactId) {
         contactRepository.deleteById(contactId);
     }
+
+    @Override
+    public ContactDto findByWeddingId(UUID weddingId) {
+        Contact contact = contactRepository.findByWeddingId(weddingId).orElse(null);
+        if (Objects.isNull(contact)) {
+            // todo
+        } else {
+            return contactMapper.contactToContactDto(contact);
+        }
+        return null;
+    }
 }

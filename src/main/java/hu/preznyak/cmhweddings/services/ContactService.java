@@ -15,4 +15,6 @@ public interface ContactService {
     ContactDto update(UUID contactId, ContactDto updatedContactDto);
 
     void delete(UUID contactId);
+
+    ContactDto findByWeddingId(UUID weddingId);
 }
