@@ -2,13 +2,18 @@ package hu.preznyak.cmhweddings.services;
 
 import hu.preznyak.cmhweddings.domain.Wedding;
 import hu.preznyak.cmhweddings.repositories.WeddingRepository;
+import hu.preznyak.cmhweddings.web.exception.ErrorCode;
 import hu.preznyak.cmhweddings.web.mappers.WeddingMapper;
 import hu.preznyak.cmhweddings.web.model.WeddingDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -28,7 +33,9 @@ public class WeddingServiceImpl implements WeddingService {
     @Override
     public WeddingDto findById(UUID weddingId) {
         Optional<Wedding> wedding = weddingRepository.findById(weddingId);
-        return wedding.map(weddingMapper::weddingToWeddingDto).orElse(null); // todo - fix the orElse part
+        val weddingDto = wedding.map(weddingMapper::weddingToWeddingDto)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.WEDDING_NOT_FOUND));
+        return weddingDto;
     }
 
     @Override
@@ -39,15 +46,13 @@ public class WeddingServiceImpl implements WeddingService {
 
     @Override
     public WeddingDto update(UUID weddingId, WeddingDto updatedWeddingDto) {
-        Wedding saved = weddingRepository.findById(weddingId).orElse(null); // todo
-        if (Objects.isNull(saved)) {
-            return null; // todo
-        } else {
-            saved.setDate(updatedWeddingDto.getDate());
-            saved.setLocation(updatedWeddingDto.getLocation());
-            saved.setPrice(updatedWeddingDto.getPrice());
-            saved.setCurrency(updatedWeddingDto.getCurrency().name());
-        }
+        Wedding saved = weddingRepository.findById(weddingId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.WEDDING_NOT_FOUND));
+
+        saved.setDate(updatedWeddingDto.getDate());
+        saved.setLocation(updatedWeddingDto.getLocation());
+        saved.setPrice(updatedWeddingDto.getPrice());
+        saved.setCurrency(updatedWeddingDto.getCurrency().name());
 
         return weddingMapper.weddingToWeddingDto(weddingRepository.save(saved));
     }

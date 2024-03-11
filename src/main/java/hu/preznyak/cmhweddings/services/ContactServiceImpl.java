@@ -2,12 +2,18 @@ package hu.preznyak.cmhweddings.services;
 
 import hu.preznyak.cmhweddings.domain.Contact;
 import hu.preznyak.cmhweddings.repositories.ContactRepository;
+import hu.preznyak.cmhweddings.web.exception.ErrorCode;
 import hu.preznyak.cmhweddings.web.mappers.ContactMapper;
 import hu.preznyak.cmhweddings.web.model.ContactDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -29,7 +35,9 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public ContactDto findById(UUID contactId) {
         Optional<Contact> contact = contactRepository.findById(contactId);
-        return contact.map(contactMapper::contactToContactDto).orElse(null); // todo fix
+        val contactDto = contact.map(contactMapper::contactToContactDto)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.CONTACT_NOT_FOUND));
+        return contactDto;
     }
 
     @Override
@@ -40,14 +48,13 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public ContactDto update(UUID contactId, ContactDto updatedContactDto) {
-        Contact toUpdate = contactRepository.findById(contactId).orElse(null);
-        if (Objects.isNull(toUpdate)) {
-            //todo
-        } else {
-            toUpdate.setName(updatedContactDto.getName());
-            toUpdate.setEmailAddress(updatedContactDto.getEmailAddress());
-            toUpdate.setPhoneNumber(updatedContactDto.getPhoneNumber());
-        }
+        Contact toUpdate = contactRepository.findById(contactId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.CONTACT_NOT_FOUND));
+
+        toUpdate.setName(updatedContactDto.getName());
+        toUpdate.setEmailAddress(updatedContactDto.getEmailAddress());
+        toUpdate.setPhoneNumber(updatedContactDto.getPhoneNumber());
+
         return contactMapper.contactToContactDto(contactRepository.save(toUpdate));
     }
 
@@ -58,12 +65,8 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public ContactDto findByWeddingId(UUID weddingId) {
-        Contact contact = contactRepository.findByWeddingId(weddingId).orElse(null);
-        if (Objects.isNull(contact)) {
-            // todo
-        } else {
-            return contactMapper.contactToContactDto(contact);
-        }
-        return null;
+        Contact contact = contactRepository.findByWeddingId(weddingId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.CONTACT_NOT_FOUND));
+        return contactMapper.contactToContactDto(contact);
     }
 }
