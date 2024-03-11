@@ -30,6 +30,6 @@ public class Contact {
     private String phoneNumber;
 
     @OneToOne
-    @JoinColumn(name = "wedding_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "wedding_id", referencedColumnName = "id", nullable = false, updatable = false)
     private Wedding wedding;
 }

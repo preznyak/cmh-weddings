@@ -36,7 +36,7 @@ class ContactMapperTest {
         assertEquals(contactDto.getName(), contact.getName());
         assertEquals(contactDto.getEmailAddress(), contact.getEmailAddress());
         assertEquals(contactDto.getPhoneNumber(), contact.getPhoneNumber());
-        assertEquals(contactDto.getWeddingDto().getId(), contact.getWedding().getId());
+        assertEquals(contactDto.getWeddingDtoId(), contact.getWedding().getId());
 
     }
 
@@ -54,6 +54,6 @@ class ContactMapperTest {
         assertEquals(contact.getName(), contactDto.getName());
         assertEquals(contact.getEmailAddress(), contactDto.getEmailAddress());
         assertEquals(contact.getPhoneNumber(), contactDto.getPhoneNumber());
-        assertEquals(contact.getWedding().getId(), contactDto.getWeddingDto().getId());
+        assertEquals(contact.getWedding().getId(), contactDto.getWeddingDtoId());
     }
 }

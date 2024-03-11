@@ -3,7 +3,6 @@ package hu.preznyak.cmhweddings.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.preznyak.cmhweddings.services.ContactService;
 import hu.preznyak.cmhweddings.web.model.ContactDto;
-import hu.preznyak.cmhweddings.web.model.WeddingDto;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,11 +97,10 @@ public class ContactControllerTests {
     @Test
     void testFindByWeddingId() throws Exception {
 
-        WeddingDto weddingDto = contactDto.getWeddingDto();
         when(contactService.findByWeddingId(VALID_UUID)).thenReturn(contactDto);
 
         mockMvc.perform(get(API_V1_CONTACT + "/byWeddingId/" + VALID_UUID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.weddingDto.id").value(weddingDto.getId().toString()));
+                .andExpect(jsonPath("$.weddingDtoId").value(contactDto.getWeddingDtoId().toString()));
     }
 }

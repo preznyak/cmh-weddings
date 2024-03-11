@@ -5,12 +5,12 @@ import hu.preznyak.cmhweddings.web.model.ContactDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = {WeddingMapper.class})
+@Mapper
 public interface ContactMapper {
 
-    @Mapping(target = "wedding",source = "contactDto.weddingDto")
+    @Mapping(target = "wedding.id",source = "contactDto.weddingDtoId")
     Contact contactDtoToContact(ContactDto contactDto);
 
-    @Mapping(target = "weddingDto",source = "contact.wedding")
+    @Mapping(target = "weddingDtoId",source = "contact.wedding.id")
     ContactDto contactToContactDto(Contact contact);
 }

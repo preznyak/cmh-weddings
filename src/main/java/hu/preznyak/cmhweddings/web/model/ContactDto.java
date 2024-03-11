@@ -27,5 +27,5 @@ public class ContactDto {
     private String phoneNumber;
 
     @NotNull
-    private WeddingDto weddingDto;
+    private UUID weddingDtoId;
 }
