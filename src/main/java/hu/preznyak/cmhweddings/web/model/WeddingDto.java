@@ -22,7 +22,6 @@ import java.util.UUID;
 @Builder
 public class WeddingDto {
 
-    @Null
     private UUID id;
 
     @Size(min = 5, max = 50)
