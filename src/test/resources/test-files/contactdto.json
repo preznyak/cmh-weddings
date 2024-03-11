@@ -1,0 +1,16 @@
+{
+  "id": "b582c17f-e445-4794-80da-87326c2d1ec9",
+  "name": "Ben Parker",
+  "emailAddress": "unclebens@marvel.com",
+  "phoneNumber": "+25441554885",
+  "weddingDto": {
+    "id": "b582c17f-e445-4794-80da-87326c2d1ec9",
+    "brideName": "Mary Jane Watson",
+    "groomName": "Peter Benjamin Parker",
+    "location": "Marvel Universe",
+    "date": "2024-08-22",
+    "price": 500,
+    "currency": "EUR",
+    "style": "TRADITIONAL"
+  }
+}

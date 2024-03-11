@@ -1,9 +1,6 @@
 package hu.preznyak.cmhweddings.web.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Null;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +14,6 @@ import java.util.UUID;
 @Builder
 public class ContactDto {
 
-    @Null(message = "Id should be null.")
     private UUID id;
 
     @Size(min = 5, max = 50, message = "Name length should be between 5 and 50 characters.")
@@ -29,4 +25,7 @@ public class ContactDto {
 
     @Size(min = 8, max = 20, message = "Phone number length should be between 8 and 20 characters.")
     private String phoneNumber;
+
+    @NotNull
+    private WeddingDto weddingDto;
 }
