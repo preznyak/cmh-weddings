@@ -1,8 +1,6 @@
 package hu.preznyak.cmhweddings.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +19,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(uniqueConstraints =
+    @UniqueConstraint(columnNames = {"bride_name", "groom_name"})
+)
 public class Wedding {
     @Id
     @UuidGenerator
