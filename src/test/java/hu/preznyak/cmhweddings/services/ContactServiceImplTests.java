@@ -18,7 +18,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class ContactServiceImplTest {
+class ContactServiceImplTests {
 
     @MockBean
     ContactRepository contactRepository;

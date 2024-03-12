@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(WeddingController.class)
 public class WeddingControllerTests {
 
-    public static final String API_V1_WEDDING = "/api/v1/wedding";
-    public static final UUID VALID_UUID = UUID.randomUUID();
+    private static final String API_V1_WEDDING = "/api/v1/wedding";
+    private static final UUID VALID_UUID = UUID.randomUUID();
 
     @Autowired
     MockMvc mockMvc;
