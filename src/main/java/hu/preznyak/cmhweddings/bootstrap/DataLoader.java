@@ -40,7 +40,7 @@ public class DataLoader implements CommandLineRunner {
                     .brideName("Angela Martin")
                     .groomName("Dwight Schrute")
                     .date(LocalDate.of(2013, 6, 15))
-                    .location("Shrute Farms")
+                    .location("Schrute Farms")
                     .price(new BigDecimal(740))
                     .currency("USD")
                     .build());

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>hu.preznyak</groupId>
 	<artifactId>cmh-weddings</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>cmh-weddings</name>
 	<description>Helper Tool for Ceremony Masters</description>
 	<properties>
