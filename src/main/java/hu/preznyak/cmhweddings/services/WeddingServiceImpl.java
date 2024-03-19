@@ -2,6 +2,7 @@ package hu.preznyak.cmhweddings.services;
 
 import hu.preznyak.cmhweddings.domain.Wedding;
 import hu.preznyak.cmhweddings.repositories.WeddingRepository;
+import hu.preznyak.cmhweddings.utils.CodeGenerator;
 import hu.preznyak.cmhweddings.web.exception.ErrorCode;
 import hu.preznyak.cmhweddings.web.mappers.WeddingMapper;
 import hu.preznyak.cmhweddings.web.model.WeddingDto;
@@ -40,6 +41,7 @@ public class WeddingServiceImpl implements WeddingService {
 
     @Override
     public WeddingDto save(WeddingDto newWeddingDto) {
+        newWeddingDto.setCode(CodeGenerator.generate(newWeddingDto));
         Wedding toSave = weddingMapper.weddingDtoToWedding(newWeddingDto);
         return weddingMapper.weddingToWeddingDto(weddingRepository.save(toSave));
     }

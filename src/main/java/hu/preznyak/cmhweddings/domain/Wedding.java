@@ -27,6 +27,9 @@ public class Wedding {
     @UuidGenerator
     private UUID id;
 
+    @Column(unique = true)
+    private String code;
+
     @Column(length = 50, nullable = false)
     private String brideName;
 

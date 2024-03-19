@@ -24,6 +24,8 @@ public class WeddingDto {
 
     private UUID id;
 
+    private String code;
+
     @Size(min = 5, max = 50)
     @NotBlank
     private String brideName;
